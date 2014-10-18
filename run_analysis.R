@@ -31,4 +31,12 @@ rm(y_test, X_test)
 data_set = rbind(test_set, training_set)
 rm(test_set, training_set)
 
+# Loading of features.txt file
+filename = "UCI HAR Dataset/features.txt"
+features = read.table(unz(zipfile, filename))
+selected_features = features[grepl("mean|std",features$name),]
 
+# data_set variable reduction. As we have added a first column with the activity, we have to add 1 to the positions
+# of the features
+data_set_red = data_set[, c(1, selected_features[[1]] + 1)]
+rm(data_set)
